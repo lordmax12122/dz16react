@@ -11,16 +11,24 @@ function App() {
   });
 
   const handleClick = (type) => {
-    setFeedback({ ...feedback, [type]: feedback[type] + 1 });
+    setFeedback(prev => ({
+      ...prev,
+      [type]: prev[type] + 1,
+    }));
   };
 
   const total = feedback.good + feedback.neutral + feedback.bad;
-  const positivePercent = total ? Math.round((feedback.good / total) * 100) : 0;
+  const positivePercent = total
+    ? Math.round((feedback.good / total) * 100)
+    : 0;
 
   return (
     <>
       <Section title="Please leave feedback">
-        <FeedbackOptions options={Object.keys(feedback)} onLeaveFeedback={handleClick} />
+        <FeedbackOptions
+          options={Object.keys(feedback)}
+          onLeaveFeedback={handleClick}
+        />
       </Section>
 
       {total > 0 && (
